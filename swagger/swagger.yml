@@ -1,0 +1,232 @@
+swagger: "2.0"
+info:
+  title: beego Test API
+  description: beego has a very cool tools to autogenerate documents for your API
+  version: 1.0.0
+  termsOfService: http://beego.me/
+  contact:
+    email: astaxie@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+basePath: /api
+paths:
+  /admin/answer/{id}:
+    delete:
+      tags:
+      - admin
+      description: 删除这道题的答案
+      operationId: AdminController.DeleteAnswer
+      parameters:
+      - in: path
+        name: id
+        description: 题号， 数字，第一题就写1  第二题就写2
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "0":
+          description: 失败
+        "1":
+          description: 成功
+  /admin/answer/getAll:
+    get:
+      tags:
+      - admin
+      description: 获取所有问题的答案
+      operationId: AdminController.GetAllAnswer
+      responses:
+        "0":
+          description: 失败
+        "1":
+          description: 成功
+  /admin/bangdan:
+    get:
+      tags:
+      - admin
+      description: 答题榜单
+      operationId: AdminController.BangDan
+      responses:
+        "0":
+          description: 失败
+        "1":
+          description: 成功
+  /admin/initUser:
+    post:
+      tags:
+      - admin
+      description: 初始化管理员。重复录入会覆盖
+      operationId: AdminController.InitAdmin
+      parameters:
+      - in: query
+        name: name
+        description: 登录名
+        required: true
+        type: string
+      - in: query
+        name: pswd
+        description: 密码
+        required: true
+        type: string
+      responses:
+        "0":
+          description: 失败
+        "1":
+          description: 成功
+  /admin/inputAnswer:
+    post:
+      tags:
+      - admin
+      description: 管理员录入正确答案
+      operationId: AdminController.InputAnswer
+      parameters:
+      - in: query
+        name: questID
+        description: 题号， 数字，第一题就写1  第二题就写2
+        required: true
+        type: integer
+        format: int64
+      - in: query
+        name: answer
+        description: 答案选项，比如 A ，B  C ，不分大小写
+        required: true
+        type: string
+      responses:
+        "0":
+          description: 失败
+        "1":
+          description: 成功
+  /admin/login:
+    post:
+      tags:
+      - admin
+      description: 管理员登录
+      operationId: AdminController.login
+      parameters:
+      - in: query
+        name: name
+        description: 登录名
+        required: true
+        type: string
+      - in: query
+        name: pswd
+        description: 密码
+        required: true
+        type: string
+      responses:
+        "0":
+          description: 失败
+        "1":
+          description: 成功
+  /admin/question/{id}:
+    get:
+      tags:
+      - admin
+      description: find object by objectid
+      operationId: AdminController.Get
+      parameters:
+      - in: path
+        name: id
+        description: 题号， 数字，第一题就写1  第二题就写2
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "0":
+          description: 失败
+        "1":
+          description: 成功
+  /admin/setQuestionID:
+    post:
+      tags:
+      - admin
+      description: 设置当前是哪道题
+      operationId: AdminController.SetQuestionID
+      parameters:
+      - in: query
+        name: questID
+        description: 题号， 数字，第一题就写1  第二题就写2
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "0":
+          description: 失败
+        "1":
+          description: 成功
+  /user/answer:
+    post:
+      tags:
+      - user
+      description: 普通玩家回答问题
+      operationId: UserController.answerQuestion
+      parameters:
+      - in: query
+        name: questID
+        description: 题号， 数字，第一题就写1  第二题就写2
+        required: true
+        type: integer
+        format: int64
+      - in: query
+        name: answer
+        description: 答案选项，比如 A ，B  C ，不分大小写
+        required: true
+        type: string
+      responses:
+        "0":
+          description: 失败
+        "1":
+          description: 成功
+  /user/answer/{questID}:
+    get:
+      tags:
+      - user
+      description: 获取自己某一题的答案
+      operationId: UserController.GetAnswer
+      parameters:
+      - in: path
+        name: questID
+        description: 题号， 数字，第一题就写1  第二题就写2
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "0":
+          description: 失败
+        "1":
+          description: 成功
+  /user/getMyAllAnswer:
+    get:
+      tags:
+      - user
+      description: 获取自己的所有答案
+      operationId: UserController.getMyAllAnswer
+      responses:
+        "0":
+          description: 失败
+        "1":
+          description: 成功
+  /user/login:
+    post:
+      tags:
+      - user
+      description: 普通玩家登录
+      operationId: UserController.login
+      parameters:
+      - in: query
+        name: name
+        description: 登录名
+        required: true
+        type: string
+      responses:
+        "0":
+          description: 失败
+        "1":
+          description: 成功
+tags:
+- name: admin
+  description: |
+    管理员操作API
+- name: user
+  description: |
+    玩家操作API
